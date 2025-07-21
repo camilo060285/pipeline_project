@@ -1,1 +1,76 @@
+# Imports
+import pandas as pd
+import numpy as np
+
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, roc_auc_score, classification_report
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+
+# Load data
+df = pd.read_csv("../data/processed/clean_employee_data.csv")
+X = df.drop("Attrition", axis=1)
+y = df["Attrition"]
+
+# Split: train/val/test
+X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.25, stratify=y_temp, random_state=42)
+
+# Define models and their hyperparameters
+models = {
+    "LogisticRegression": {
+        "model": LogisticRegression(max_iter=1000, class_weight='balanced'),
+        "params": {"model__C": [0.1, 1, 10]}
+    },
+    "RandomForest": {
+        "model": RandomForestClassifier(class_weight='balanced', random_state=42),
+        "params": {"model__n_estimators": [100, 200], "model__max_depth": [5, 10]}
+    },
+    "XGBoost": {
+        "model": XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42),
+        "params": {"model__n_estimators": [100], "model__max_depth": [3, 5], "model__learning_rate": [0.1, 0.3]}
+    }
+}
+
+# Run GridSearchCV for each model
+results = []
+for name, m in models.items():
+    pipe = Pipeline([
+        ("scaler", StandardScaler()),
+        ("model", m["model"])
+    ])
+    clf = GridSearchCV(pipe, m["params"], cv=5, scoring="roc_auc", n_jobs=-1)
+    clf.fit(X_train, y_train)
+    
+    y_pred = clf.predict(X_val)
+    y_prob = clf.predict_proba(X_val)[:, 1]
+    
+    acc = accuracy_score(y_val, y_pred)
+    auc = roc_auc_score(y_val, y_prob)
+    
+    print(f"\n📊 {name}")
+    print(f"Best Params: {clf.best_params_}")
+    print(f"Validation Accuracy: {acc:.4f}")
+    print(f"Validation ROC AUC: {auc:.4f}")
+    print("Classification Report:\n", classification_report(y_val, y_pred))
+    
+    results.append({
+        "model": name,
+        "best_estimator": clf.best_estimator_,
+        "accuracy": acc,
+        "roc_auc": auc
+    })
+
+# Pick best model and evaluate on test set
+best_model = max(results, key=lambda x: x["roc_auc"])["best_estimator_"]
+y_test_pred = best_model.predict(X_test)
+y_test_prob = best_model.predict_proba(X_test)[:, 1]
+
+print("\n✅ Best Model Evaluation on Test Set:")
+print(f"Accuracy: {accuracy_score(y_test, y_test_pred):.4f}")
+print(f"ROC AUC: {roc_auc_score(y_test, y_test_prob):.4f}")
+print("Classification Report:\n", classification_report(y_test, y_test_pred))
 
