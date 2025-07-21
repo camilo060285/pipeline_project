@@ -51,12 +51,14 @@ This portfolio project demonstrates an end-to-end machine learning workflow desi
 
 ## 📊 Dataset
 
-> You can insert your chosen dataset here once selected. Be sure to describe the source, variables, and prediction goal.
-
-Example:
-- **Dataset**: [UCI Heart Disease Dataset](https://archive.ics.uci.edu/ml/datasets/heart+Disease)
-- **Target Variable**: Presence or absence of heart disease
+- **Dataset**: [IBM HR Analytics Employee Attrition Dataset](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+- **Source**: Kaggle (originally fictional data provided by IBM)
+- **Target Variable**: `Attrition` – Whether an employee left the company (`Yes`) or not (`No`)
 - **Prediction Type**: Binary classification
+- **Sample Size**: 1,470 employee records
+- **Features**: 35 variables including demographic data, job role, satisfaction levels, income, and tenure
+- **Use Case**: Predict whether an employee is likely to resign, enabling HR teams to take proactive retention measures
+
 
 ## 🧠 Skills Demonstrated
 
