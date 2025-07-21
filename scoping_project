@@ -1,0 +1,61 @@
+## 🗺️ Project Scoping
+
+Properly scoping the project provides structure and clarity while identifying key steps in the machine learning lifecycle. The scope will evolve as we learn more during implementation.
+
+### 🎯 Goals
+
+- **Primary Goal**: Build an end-to-end machine learning pipeline capable of making accurate predictions and supporting data-driven decision-making.
+- **Secondary Goals**:
+  - Practice reproducible ML practices using production-ready code.
+  - Demonstrate understanding of the full ML workflow from raw data to deployment.
+  - Produce a polished portfolio project that can be shared with potential employers or clients.
+
+### 📦 Data
+
+> *(Update once dataset is chosen)*
+
+- **Source**: [To be determined / Insert dataset link]
+- **Description**: [Brief explanation of the dataset – e.g., structure, sample size, time range]
+- **Target Variable**: [What you're trying to predict – e.g., price, churn, disease]
+- **Features**: [List key features and their types – categorical, numerical, etc.]
+- **Expected Challenges**:
+  - Missing or noisy data
+  - Class imbalance (if classification)
+  - Feature correlation or dimensionality
+
+### 📊 Analysis Plan
+
+#### Step 1: Exploratory Data Analysis (EDA)
+- Understand distributions and relationships between variables.
+- Identify and handle missing values, outliers, or anomalies.
+- Visualize key insights.
+
+#### Step 2: Data Preprocessing
+- Encode categorical variables
+- Normalize or scale features
+- Create new engineered features
+- Split into train/test sets
+
+#### Step 3: Modeling
+- Baseline model with simple algorithms (e.g., logistic regression)
+- Compare multiple models (e.g., random forest, XGBoost)
+- Hyperparameter tuning via cross-validation
+
+#### Step 4: Evaluation
+- Use metrics appropriate to the task (e.g., accuracy, ROC-AUC, RMSE)
+- Analyze error cases
+- Address overfitting/underfitting
+
+#### Step 5: Pipeline Productionalization
+- Modularize code into reusable scripts
+- Integrate config management
+- Save model artifacts and track experiments
+- Containerize with Docker (optional)
+
+#### Step 6: Documentation & Reporting
+- Create clear README, code comments, and Jupyter Notebooks
+- Include test coverage and CI/CD pipeline (optional)
+
+---
+
+⚠️ **Note**: As the project evolves, some downstream steps may need to be revised or removed. The scope will remain a living document.
