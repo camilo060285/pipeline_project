@@ -1,0 +1,20 @@
+# Setup
+import sys
+import os
+import pandas as pd
+
+sys.path.append(os.path.abspath("../src"))
+from etl import extract_data, transform_employee_data, load_data
+
+# Paths
+raw_path = "../data/raw/WA_Fn-UseC_-HR-Employee-Attrition.csv"
+clean_path = "../data/processed/clean_employee_data.csv"
+file_paths = {"employee_data": raw_path}
+
+# ETL Process
+dfs = extract_data(file_paths)
+clean_df = transform_employee_data(dfs["employee_data"])
+load_data(clean_df, clean_path)
+
+# Preview result
+pd.read_csv(clean_path).head()
