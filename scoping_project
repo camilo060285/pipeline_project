@@ -12,16 +12,22 @@ Properly scoping the project provides structure and clarity while identifying ke
 
 ### 📦 Data
 
-> *(Update once dataset is chosen)*
-
-- **Source**: [To be determined / Insert dataset link]
-- **Description**: [Brief explanation of the dataset – e.g., structure, sample size, time range]
-- **Target Variable**: [What you're trying to predict – e.g., price, churn, disease]
-- **Features**: [List key features and their types – categorical, numerical, etc.]
+- **Source**: [IBM HR Analytics Employee Attrition Dataset – Kaggle](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+- **Description**:  
+  This dataset contains information about 1,470 employees at a fictional IBM workplace. It includes demographic, job-related, and satisfaction-related variables, designed to help predict whether an employee is likely to voluntarily leave the company (attrition). The data is clean and well-suited for supervised machine learning tasks, particularly binary classification.
+- **Target Variable**:  
+  `Attrition` – Indicates whether an employee left the company (`Yes`) or stayed (`No`).
+- **Features**:
+  - **Categorical**:
+    - `BusinessTravel`, `Department`, `EducationField`, `Gender`, `JobRole`, `MaritalStatus`, `OverTime`
+  - **Ordinal**:
+    - `Education`, `EnvironmentSatisfaction`, `JobInvolvement`, `JobSatisfaction`, `PerformanceRating`, `RelationshipSatisfaction`, `WorkLifeBalance`
+  - **Numerical**:
+    - `Age`, `DailyRate`, `DistanceFromHome`, `HourlyRate`, `MonthlyIncome`, `MonthlyRate`, `NumCompaniesWorked`, `PercentSalaryHike`, `TotalWorkingYears`, `TrainingTimesLastYear`, `YearsAtCompany`, `YearsInCurrentRole`, `YearsSinceLastPromotion`, `YearsWithCurrManager`
 - **Expected Challenges**:
-  - Missing or noisy data
-  - Class imbalance (if classification)
-  - Feature correlation or dimensionality
+  - **Class imbalance**: Only ~16% of employees left, making "Yes" the minority class.
+  - **Feature correlation**: Some numerical fields like income and years of experience may be collinear.
+  - **Overfitting risk**: The relatively small sample size (1,470 rows) requires careful regularization and validation.
 
 ### 📊 Analysis Plan
 
