@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# Load cleaned dataset
+df = pd.read_csv("../data/processed/clean_employee_data.csv")
+
+# Separate target and features
+X = df.drop("Attrition", axis=1)
+y = df["Attrition"]
+
+# Step 1: Train/Validation/Test split (60/20/20)
+X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.25, random_state=42, stratify=y_temp)
+
+# Step 2: Scaling
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_val_scaled = scaler.transform(X_val)
+X_test_scaled = scaler.transform(X_test)
+
+# Step 3: Optional PCA (keep 95% variance)
+use_pca = False  # Change to True to apply dimensionality reduction
+
+if use_pca:
+    pca = PCA(n_components=0.95, random_state=42)
+    X_train_scaled = pca.fit_transform(X_train_scaled)
+    X_val_scaled = pca.transform(X_val_scaled)
+    X_test_scaled = pca.transform(X_test_scaled)
+    print(f"✅ PCA applied. Final shape: {X_train_scaled.shape}")
+else:
+    print(f"✅ Scaling done. No PCA applied. Feature count: {X_train_scaled.shape[1]}")
+
+# Optional: show class balance in splits
+print(f"Train class distribution:\n{y_train.value_counts(normalize=True)}")
+print(f"Validation class distribution:\n{y_val.value_counts(normalize=True)}")
+print(f"Test class distribution:\n{y_test.value_counts(normalize=True)}")
